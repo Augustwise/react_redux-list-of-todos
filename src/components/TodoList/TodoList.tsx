@@ -1,8 +1,10 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '../../app/store';
+import { setCurrentTodo } from '../../features/currentTodo';
 
 export const TodoList: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const todos = useSelector((state: RootState) => state.todos);
   const { query, status } = useSelector((state: RootState) => state.filter);
 
@@ -69,7 +71,12 @@ export const TodoList: React.FC = () => {
               </td>
 
               <td className="has-text-right is-vcentered">
-                <button data-cy="selectButton" className="button" type="button">
+                <button
+                  data-cy="selectButton"
+                  className="button"
+                  type="button"
+                  onClick={() => dispatch(setCurrentTodo(todo))}
+                >
                   <span className="icon">
                     <i className="far fa-eye" />
                   </span>
